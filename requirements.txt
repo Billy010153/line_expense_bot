@@ -1,5 +1,0 @@
-flask
-requests
-line-bot-sdk
-gspread
-oauth2client
