@@ -5,6 +5,7 @@ from datetime import datetime
 
 SPREADSHEET_NAME = "LINE_記帳"
 SHEET_NAME = "帳目"
+creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
 
 def get_sheet():
     scope = [
