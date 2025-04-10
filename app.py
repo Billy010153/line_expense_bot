@@ -17,7 +17,7 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 @app.route("/", methods=["GET"])
 def home():
-    return "記帳 + GPT 查詢 Bot 啟動中"
+    return "記帳 + GPT 自動分類啟動中"
 
 @app.route("/callback", methods=["POST"])
 def callback():
@@ -40,6 +40,15 @@ def callback():
 
     return jsonify({"status": "ok"})
 
+def auto_classify_item(item_name):
+    prompt = f"請幫我判斷「{item_name}」屬於哪一類消費，只回傳分類名稱，不要多餘文字。分類例如：餐飲、交通、娛樂、日用品、收入、其他。"
+    messages = [
+        {"role": "system", "content": "你是一個記帳機器人，擅長幫使用者標記分類"},
+        {"role": "user", "content": prompt}
+    ]
+    response = client.chat.completions.create(model="gpt-3.5-turbo", messages=messages)
+    return response.choices[0].message.content.strip()
+
 def handle_user_message(msg):
     if msg.lower() in ["餘額", "查帳", "總覽"]:
         return get_summary()
@@ -60,14 +69,13 @@ def handle_user_message(msg):
 
     try:
         parts = msg.split()
-        if len(parts) == 2:
-            item, amount = parts[0], float(parts[1])
-            append_expense(item, amount)
-            return f"✅ 已記錄：{item} {amount} 元"
-    except:
-        return "❗格式錯誤，請用『品項 金額』格式，例如：早餐 50"
-
-    return "請輸入記帳格式或用 /ai 問 GPT 查帳，例如：/ai 我今天花了什麼？"
+        amount = float(parts[-1])
+        item = " ".join(parts[:-1])
+        category = auto_classify_item(item)
+        append_expense(item, amount, category)
+        return f"✅ 已記錄：{item} {amount} 元（分類：{category}）"
+    except Exception as e:
+        return f"❗ 格式錯誤，請用『品項 金額』格式，例如：早餐 50\n或錯誤：{str(e)}"
 
 if __name__ == "__main__":
     app.run(port=5000)
