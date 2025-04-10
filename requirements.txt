@@ -1,6 +1,6 @@
+
 flask
-requests
 line-bot-sdk
+openai
 gspread
 oauth2client
-openai
