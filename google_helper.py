@@ -1,14 +1,9 @@
-
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 from google.oauth2 import service_account
 
-creds = service_account.Credentials.from_service_account_file('/etc/secrets/credentials.json')
-
 SPREADSHEET_NAME = "LINE_記帳"
 SHEET_NAME = "帳目"
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
 
 def get_sheet():
     scope = [
@@ -16,10 +11,11 @@ def get_sheet():
         "https://www.googleapis.com/auth/drive"
     ]
     creds_path = "/etc/secrets/credentials.json"
-    creds = ServiceAccountCredentials.from_json_keyfile_name(creds_path, scope)
+    creds = service_account.Credentials.from_service_account_file(creds_path, scopes=scope)
     client = gspread.authorize(creds)
     sheet = client.open(SPREADSHEET_NAME).worksheet(SHEET_NAME)
     return sheet
+
 
 def append_expense(item, amount, category):
     sheet = get_sheet()
