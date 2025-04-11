@@ -69,12 +69,12 @@ def handle_user_message(msg):
             return f"❗ GPT 查詢錯誤：{str(e)}"
 
     try:
-        parts = msg.split()
-        amount = float(parts[-1])
-        item = " ".join(parts[:-1])
-        category = auto_classify_item(item)
-        append_expense(item, amount, category)
-        return f"✅ 已記錄：{item} {amount} 元（分類：{category}）"
+    parts = msg.split()
+    amount = float(parts[-1])
+    item = parts[0]
+    category = auto_classify_item(item)
+    append_expense(item, amount, category)
+    return f"{item} {amount} 元記下來囉！分類：{category}"
     except Exception as e:
         return f"❗ 格式錯誤，請用『品項 金額』格式，例如：早餐 50或錯誤：{str(e)}"
 
