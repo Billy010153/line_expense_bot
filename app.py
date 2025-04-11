@@ -68,7 +68,7 @@ def handle_user_message(msg):
         except Exception as e:
             return f"❗ GPT 查詢錯誤：{str(e)}"
 
-        try:
+    try:
         parts = msg.split()
         amount = float(parts[-1])
         item = parts[0]
