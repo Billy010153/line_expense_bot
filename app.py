@@ -80,4 +80,4 @@ def handle_user_message(msg):
         return f"❌ 格式錯誤！請用 品項 金額 方式，例如：早餐 50\n錯誤訊息：{str(e)}"
 
 if __name__ == "__main__":
-    app.run(port=5000)
+    app.run(host="0.0.0.0", port=5000)
