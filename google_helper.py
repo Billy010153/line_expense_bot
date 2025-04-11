@@ -2,6 +2,9 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
+from google.oauth2 import service_account
+
+creds = service_account.Credentials.from_service_account_file('/etc/secrets/credentials.json')
 
 SPREADSHEET_NAME = "LINE_記帳"
 SHEET_NAME = "帳目"
