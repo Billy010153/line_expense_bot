@@ -60,8 +60,10 @@ def handle_user_message(msg):
         try:
             data = get_recent_expenses_for_gpt()
             messages = [
-                {"role": "system", "content": "你是一位記帳分析師，請根據使用者最近的支出資料，以親切自然的語氣回答問題。"},
-                {"role": "user", "content": f"這是最近的記帳紀錄：
+    {"role": "system", "content": "你是一位記帳分析師，請根據使用者最近的支出資料，以親切自然的語氣回答問題。"},
+    {"role": "user", "content": f"這是最近的記帳紀錄：\n{data}\n\n{question}"}
+]
+
 {data}
 
 {question}"}
