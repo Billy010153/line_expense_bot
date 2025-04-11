@@ -18,9 +18,12 @@ def get_sheet():
 
 
 def append_expense(item, amount, category):
-    sheet = get_sheet()
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    sheet.append_row([now, item, amount, category])
+    try:
+        sheet = get_sheet()
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        sheet.append_row([now, item, amount, category])
+    except Exception as e:
+        print(f"[❌ ERROR] 無法寫入 Google Sheet: {str(e)}")
 
 def get_summary():
     sheet = get_sheet()
