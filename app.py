@@ -76,8 +76,7 @@ def handle_user_message(msg):
         append_expense(item, amount, category)
         return f"✅ 已記錄：{item} {amount} 元（分類：{category}）"
     except Exception as e:
-        return f"❗ 格式錯誤，請用『品項 金額』格式，例如：早餐 50
-或錯誤：{str(e)}"
+        return f"❗ 格式錯誤，請用『品項 金額』格式，例如：早餐 50或錯誤：{str(e)}"
 
 if __name__ == "__main__":
     app.run(port=5000)
