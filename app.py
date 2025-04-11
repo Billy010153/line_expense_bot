@@ -67,17 +67,21 @@ def handle_user_message(msg):
             return response.choices[0].message.content.strip()
         except Exception as e:
             return f"❗ GPT 查詢錯誤：{str(e)}"
-
+            print(f"📩 嘗試寫入：{msg}")
     try:
-        parts = msg.split()
-        amount = float(parts[-1])
-        item = parts[0]
-        category = auto_classify_item(item)
+    print(f"📩 嘗試寫入：{msg}")
+    parts = msg.split()
+    amount = float(parts[-1])
+    item = parts[0]
+    category = auto_classify_item(item)
 
-        append_expense(item, amount, category)
-        return f"{item} 花費 {amount} 分類：{category}"
-    except Exception as e:
-        return f"❌ 格式錯誤！請用 品項 金額 方式，例如：早餐 50\n錯誤訊息：{str(e)}"
+    append_expense(item, amount, category)
+    return f"{item} 花費 {amount} 分類：{category}"
+    print("📝 正在呼叫 append_expense()")
+
+except Exception as e:
+    print(f"❌ 格式錯誤或寫入失敗：{str(e)}")
+    return "❌ 格式錯誤！請用 品項 金額 方式，例如：早餐 50"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
